@@ -1,16 +1,3 @@
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: news-pvc
-  namespace: aws9h
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: aws9h-storage
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -57,4 +44,17 @@ spec:
   ports:
     - port: 80
       targetPort: 80
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: news-pvc
+  namespace: aws9h
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: aws9h-storage
 
