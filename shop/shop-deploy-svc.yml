@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: shop-container
-          image: nginx
+          image: nginx #hub.aws9.pri/library/shop-nginx:v1 
           ports:
           - containerPort: 80
           resources:

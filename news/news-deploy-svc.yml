@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: news-container
-        image: nginx
+        image: nginx #hub.aws9.pri/library/news-nginx:v1 
         ports:
         - containerPort: 80
         resources:
