@@ -23,20 +23,20 @@ spec:
         - name: blog-volume
           mountPath: /mnt
       containers:
-        - name: blog-container
-          image: hub.aws9.pri/library/blog-nginx:v1 
-          ports:
-          - containerPort: 80
-          resources:
-            requests:
-              memory: "128Mi"
-              cpu: "250m"
-            limits:
-              memory: "256Mi"
-              cpu: "500m"
-          volumeMounts:
-            - name: blog-volume
-              mountPath: /usr/share/nginx/html
+      - name: blog-container
+        image: hub.aws9.pri/library/blog-nginx:v1 
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        volumeMounts:
+        - name: blog-volume
+          mountPath: /usr/share/nginx/html
       volumes:
         - name: blog-volume
           persistentVolumeClaim:
@@ -60,9 +60,9 @@ metadata:
   name: blog-pvc
   namespace: aws9h
 spec:
+  accessModes:
+    - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
-  accessModes:
-    - ReadWriteMany
   storageClassName: aws9h-storage
