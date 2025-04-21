@@ -13,6 +13,15 @@ spec:
       labels:
         app: shop
     spec:
+      initContainers:
+      - name: copy-index
+        image: hub.aws9.pri/library/shop-nginx:v1  # index.html 포함된 이미지
+        command: ["/bin/sh", "-c"]
+        args:
+          - cp /usr/share/nginx/html/index.html /mnt/index.html
+        volumeMounts:
+        - name: shop-volume
+          mountPath: /mnt
       containers:
         - name: shop-container
           image: hub.aws9.pri/library/shop-nginx:v1 
@@ -26,10 +35,10 @@ spec:
               memory: "256Mi"
               cpu: "500m"
           volumeMounts:
-            - name: shopvol
+            - name: shop-volume
               mountPath: /usr/share/nginx/html
       volumes:
-        - name: shopvol
+        - name: shop-volume
           persistentVolumeClaim:
             claimName: shop-pvc
 ---

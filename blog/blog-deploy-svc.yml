@@ -13,6 +13,15 @@ spec:
       labels:
         tag: blog
     spec:
+      initContainers:
+      - name: copy-index
+        image: hub.aws9.pri/library/shop-nginx:v1  # index.html 포함된 이미지
+        command: ["/bin/sh", "-c"]
+        args:
+          - cp /usr/share/nginx/html/index.html /mnt/index.html
+        volumeMounts:
+        - name: blog-volume
+          mountPath: /mnt
       containers:
         - name: blog-container
           image: hub.aws9.pri/library/blog-nginx:v1 
@@ -26,10 +35,10 @@ spec:
               memory: "256Mi"
               cpu: "500m"
           volumeMounts:
-            - name: blogvol
+            - name: blog-volume
               mountPath: /usr/share/nginx/html
       volumes:
-        - name: blogvol
+        - name: blog-volume
           persistentVolumeClaim:
             claimName: blog-pvc
 ---

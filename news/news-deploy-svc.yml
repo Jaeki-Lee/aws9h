@@ -13,6 +13,15 @@ spec:
       labels:
         app: news
     spec:
+      initContainers:
+      - name: copy-index
+        image: hub.aws9.pri/library/shop-nginx:v1  # index.html 포함된 이미지
+        command: ["/bin/sh", "-c"]
+        args:
+          - cp /usr/share/nginx/html/index.html /mnt/index.html
+        volumeMounts:
+        - name: news-volume
+          mountPath: /mnt
       containers:
       - name: news-container
         image: hub.aws9.pri/library/news-nginx:v1 
